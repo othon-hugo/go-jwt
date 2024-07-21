@@ -1,5 +1,17 @@
 package jwt
 
-func Marshal(headerParams HeaderParams, claims any, secret []byte) (string, error) {
-	return (&token{header: headerParams, payload: payload{claims: claims}}).marshal(secret)
+func Unmarshal(encodedToken string, claims any, secret []byte) error {
+	tkn := &token{
+		payload: payload{claims: claims},
+	}
+
+	if err := tkn.unmarshal(encodedToken, secret); err != nil {
+		return err
+	}
+
+	if tkn.header.Typ != JWT {
+		return UnsupportedTypeError{tkn.header.Typ}
+	}
+
+	return nil
 }
