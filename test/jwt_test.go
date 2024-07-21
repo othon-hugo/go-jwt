@@ -6,7 +6,7 @@ import (
 	"github.com/othon-hugo/jwt"
 )
 
-func TestEncodeExpectedTokensMatch(t *testing.T) {
+func TestMarshalExpectedTokensMatch(t *testing.T) {
 	for i := 0; i < len(Claims); i++ {
 		claims, expectedEncodedToken := Claims[i], HS256Tokens[i]
 
@@ -15,7 +15,7 @@ func TestEncodeExpectedTokensMatch(t *testing.T) {
 			Typ: "JWT",
 		}
 
-		encodedToken, err := jwt.Encode(h, claims, Secret)
+		encodedToken, err := jwt.Marshal(h, claims, Secret)
 
 		if err != nil {
 			t.Fatalf("JWT encoding error: %v", err)
@@ -27,13 +27,13 @@ func TestEncodeExpectedTokensMatch(t *testing.T) {
 	}
 }
 
-func TestDecodeExpectedTokensMatch(t *testing.T) {
+func TestUnmarshalExpectedTokensMatch(t *testing.T) {
 	for i := 0; i < len(Claims); i++ {
 		expectedClaims, encodedToken := Claims[i], HS256Tokens[i]
 
 		resultedClaims := UserInfo{}
 
-		if err := jwt.Decode(encodedToken, &resultedClaims, Secret); err != nil {
+		if err := jwt.Unmarshal(encodedToken, &resultedClaims, Secret); err != nil {
 			t.Fatalf("JWT encoding error: %v", err)
 		}
 
@@ -43,7 +43,7 @@ func TestDecodeExpectedTokensMatch(t *testing.T) {
 	}
 }
 
-func TestDecodeInvalidSecretReturnError(t *testing.T) {
+func TestUnmarshalInvalidSecretReturnError(t *testing.T) {
 	invalidSecret := []byte("invalid-secret-key")
 
 	for i := 0; i < len(Claims); i++ {
@@ -51,7 +51,7 @@ func TestDecodeInvalidSecretReturnError(t *testing.T) {
 
 		decodedPayload := UserInfo{}
 
-		if err := jwt.Decode(token, &decodedPayload, invalidSecret); err == nil {
+		if err := jwt.Unmarshal(token, &decodedPayload, invalidSecret); err == nil {
 			t.Error("Expected error, but none occurred")
 		}
 	}

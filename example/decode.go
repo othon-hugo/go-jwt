@@ -2,8 +2,8 @@ package example
 
 import "github.com/othon-hugo/jwt"
 
-func Decode() any {
-	token, ok := Encode().(string)
+func Unmarshal() any {
+	token, ok := Marshal().(string)
 
 	if !ok {
 		return ok
@@ -11,7 +11,7 @@ func Decode() any {
 
 	claims := Info{}
 
-	err := jwt.Decode(token, &claims, Secret)
+	err := jwt.Unmarshal(token, &claims, Secret)
 
 	if err != nil {
 		return err
