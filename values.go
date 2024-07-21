@@ -16,7 +16,7 @@ func (v *b64values) unmarshal(s string) error {
 	fields := strings.SplitN(s, ".", 3)
 
 	if len(fields) != 3 {
-		return ErrInvalidTokenSupplied
+		return ErrInvalidToken
 	}
 
 	*v = b64values{

@@ -56,7 +56,7 @@ func (t *token) unmarshal(encodedToken string, secret []byte) error {
 	expectedSignature, err := encoding.DecodeJWTBase64(b64vals.signature)
 
 	if err != nil {
-		return ErrInvalidTokenSupplied
+		return ErrInvalidToken
 	}
 
 	if err := t.header.unmarshal(b64vals.header); err != nil {

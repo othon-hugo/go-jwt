@@ -6,8 +6,8 @@ import (
 )
 
 var (
-	ErrInvalidTokenSupplied = errors.New("jwt: invalid token supplied")
-	ErrSignatureMismatch    = errors.New("jwt: signature mismatch during verification")
+	ErrInvalidToken      = errors.New("jwt: invalid token")
+	ErrSignatureMismatch = errors.New("jwt: signature mismatch during verification")
 )
 
 type UnsupportedAlgorithmError struct {
