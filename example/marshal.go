@@ -3,7 +3,7 @@ package example
 import "github.com/othon-hugo/jwt"
 
 func Marshal() any {
-	h := jwt.HeaderData{
+	h := jwt.HeaderParams{
 		Alg: jwt.HS256,
 		Typ: "JWT",
 	}

@@ -1,5 +1,5 @@
 package jwt
 
-func Marshal(h HeaderData, claims any, secret []byte) (string, error) {
-	return (&token{header: h.header(), payload: payload{claims: claims}}).marshal(secret)
+func Marshal(headerParams HeaderParams, claims any, secret []byte) (string, error) {
+	return (&token{header: headerParams, payload: payload{claims: claims}}).marshal(secret)
 }

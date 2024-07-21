@@ -8,17 +8,11 @@ import (
 	"github.com/othon-hugo/jwt/encoding"
 )
 
-type HeaderData struct {
-	Alg string `json:"alg"`
-	Typ string `json:"typ"`
-}
-
-func (h HeaderData) header() header {
-	return header{HeaderData: h}
-}
+type HeaderParams = header
 
 type header struct {
-	HeaderData
+	Alg string `json:"alg"`
+	Typ string `json:"typ"`
 }
 
 func (h *header) marshal() (string, error) {
