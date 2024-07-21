@@ -1,0 +1,58 @@
+package test
+
+import (
+	"testing"
+
+	"github.com/othon-hugo/jwt"
+)
+
+func TestEncodeExpectedTokensMatch(t *testing.T) {
+	for i := 0; i < len(Claims); i++ {
+		claims, expectedEncodedToken := Claims[i], HS256Tokens[i]
+
+		h := jwt.HeaderData{
+			Alg: jwt.HS256,
+			Typ: "JWT",
+		}
+
+		encodedToken, err := jwt.Encode(h, claims, Secret)
+
+		if err != nil {
+			t.Fatalf("JWT encoding error: %v", err)
+		}
+
+		if encodedToken != expectedEncodedToken {
+			t.Errorf("Token comparison failed: Got %s, Expected: %s", encodedToken, expectedEncodedToken)
+		}
+	}
+}
+
+func TestDecodeExpectedTokensMatch(t *testing.T) {
+	for i := 0; i < len(Claims); i++ {
+		expectedClaims, encodedToken := Claims[i], HS256Tokens[i]
+
+		resultedClaims := UserInfo{}
+
+		if err := jwt.Decode(encodedToken, &resultedClaims, Secret); err != nil {
+			t.Fatalf("JWT encoding error: %v", err)
+		}
+
+		if resultedClaims.ID != expectedClaims.ID || resultedClaims.Name != expectedClaims.Name {
+			t.Errorf("Token comparison failed: Got %v, Expected: %v", resultedClaims, expectedClaims)
+		}
+	}
+}
+
+func TestDecodeInvalidSecretReturnError(t *testing.T) {
+	invalidSecret := []byte("invalid-secret-key")
+
+	for i := 0; i < len(Claims); i++ {
+		token := HS256Tokens[i]
+
+		decodedPayload := UserInfo{}
+
+		if err := jwt.Decode(token, &decodedPayload, invalidSecret); err == nil {
+			t.Error("Expected error, but none occurred")
+		}
+	}
+}
