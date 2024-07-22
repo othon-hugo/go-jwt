@@ -6,7 +6,7 @@ type UserInfo struct {
 }
 
 var (
-	Secret = []byte("your-256-bit-secret")
+	SecretKey = []byte("your-256-bit-secret")
 
 	Claims = [...]UserInfo{
 		{123456789, "John Doe"},

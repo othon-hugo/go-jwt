@@ -15,7 +15,7 @@ func TestMarshalExpectedTokensMatch(t *testing.T) {
 			Typ: "JWT",
 		}
 
-		encodedToken, err := jwt.Marshal(h, claims, Secret)
+		encodedToken, err := jwt.Marshal(h, claims, SecretKey)
 
 		if err != nil {
 			t.Fatalf("JWT encoding error: %v", err)
@@ -33,7 +33,7 @@ func TestUnmarshalExpectedTokensMatch(t *testing.T) {
 
 		resultedClaims := UserInfo{}
 
-		if err := jwt.Unmarshal(encodedToken, &resultedClaims, Secret); err != nil {
+		if err := jwt.Unmarshal(encodedToken, &resultedClaims, SecretKey); err != nil {
 			t.Fatalf("JWT encoding error: %v", err)
 		}
 
