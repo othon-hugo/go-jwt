@@ -10,7 +10,7 @@ func TestMarshalExpectedTokensMatch(t *testing.T) {
 	for i := 0; i < len(Claims); i++ {
 		claims, expectedEncodedToken := Claims[i], HS256Tokens[i]
 
-		h := jwt.HeaderParams{
+		h := jwt.Header{
 			Alg: jwt.HS256,
 			Typ: "JWT",
 		}

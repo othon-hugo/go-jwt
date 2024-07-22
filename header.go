@@ -14,14 +14,12 @@ const (
 	HS512 = "HS512"
 )
 
-type HeaderParams = header
-
-type header struct {
+type Header struct {
 	Alg string `json:"alg"`
 	Typ string `json:"typ"`
 }
 
-func (h *header) marshal() (string, error) {
+func (h *Header) marshal() (string, error) {
 	jsonHeader, err := encoding.EncodeJSON(h)
 
 	if err != nil {
@@ -31,7 +29,7 @@ func (h *header) marshal() (string, error) {
 	return encoding.EncodeJWTBase64(jsonHeader), nil
 }
 
-func (h *header) unmarshal(encodedHeader string) error {
+func (h *Header) unmarshal(encodedHeader string) error {
 	jsonHeader, err := encoding.DecodeJWTBase64(encodedHeader)
 
 	if err != nil {
@@ -41,7 +39,7 @@ func (h *header) unmarshal(encodedHeader string) error {
 	return encoding.DecodeJSON(jsonHeader, h)
 }
 
-func (h *header) signer(secret []byte) (hash.Hash, error) {
+func (h *Header) signer(secret []byte) (hash.Hash, error) {
 	switch strings.ToUpper(h.Alg) {
 	case HS256:
 		return crypto.NewHMAC(crypto.NewSHA256, secret), nil

@@ -6,7 +6,7 @@ import (
 )
 
 type token struct {
-	header  header
+	header  Header
 	payload payload
 }
 
