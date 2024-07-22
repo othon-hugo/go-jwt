@@ -2,12 +2,12 @@ package jwt
 
 const JWT = "JWT"
 
-func Unmarshal(encodedToken string, claims any, secret []byte) error {
+func Unmarshal(jws string, claims any, secret []byte) error {
 	t := &token{
 		payload: payload{claims: claims},
 	}
 
-	if err := t.unmarshal(encodedToken, secret); err != nil {
+	if err := t.unmarshal(jws, secret); err != nil {
 		return err
 	}
 

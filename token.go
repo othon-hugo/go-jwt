@@ -46,10 +46,10 @@ func (t *token) marshal(secret []byte) (string, error) {
 	return b64vals.marshal(), nil
 }
 
-func (t *token) unmarshal(encodedToken string, secret []byte) error {
+func (t *token) unmarshal(jws string, secret []byte) error {
 	b64vals := b64values{}
 
-	if err := b64vals.unmarshal(encodedToken); err != nil {
+	if err := b64vals.unmarshal(jws); err != nil {
 		return err
 	}
 

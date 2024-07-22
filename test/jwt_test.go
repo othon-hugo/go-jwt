@@ -8,32 +8,32 @@ import (
 
 func TestMarshalExpectedTokensMatch(t *testing.T) {
 	for i := 0; i < len(Claims); i++ {
-		claims, expectedEncodedToken := Claims[i], HS256Tokens[i]
+		claims, expectedJWS := Claims[i], HS256Tokens[i]
 
 		h := jwt.Header{
 			Alg: jwt.HS256,
 			Typ: "JWT",
 		}
 
-		encodedToken, err := jwt.Marshal(h, claims, SecretKey)
+		jws, err := jwt.Marshal(h, claims, SecretKey)
 
 		if err != nil {
 			t.Fatalf("JWT encoding error: %v", err)
 		}
 
-		if encodedToken != expectedEncodedToken {
-			t.Errorf("Token comparison failed: Got %s, Expected: %s", encodedToken, expectedEncodedToken)
+		if jws != expectedJWS {
+			t.Errorf("Token comparison failed: Got %s, Expected: %s", jws, expectedJWS)
 		}
 	}
 }
 
 func TestUnmarshalExpectedTokensMatch(t *testing.T) {
 	for i := 0; i < len(Claims); i++ {
-		expectedClaims, encodedToken := Claims[i], HS256Tokens[i]
+		expectedClaims, jws := Claims[i], HS256Tokens[i]
 
 		resultedClaims := UserInfo{}
 
-		if err := jwt.Unmarshal(encodedToken, &resultedClaims, SecretKey); err != nil {
+		if err := jwt.Unmarshal(jws, &resultedClaims, SecretKey); err != nil {
 			t.Fatalf("JWT encoding error: %v", err)
 		}
 
