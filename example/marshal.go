@@ -10,7 +10,7 @@ func Marshal() any {
 
 	claims := Info{ID: 1, Username: "foobar"}
 
-	token, err := jwt.Marshal(h, claims, Secret)
+	token, err := jwt.Marshal(h, claims, SecretKey)
 
 	if err != nil {
 		return err

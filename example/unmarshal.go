@@ -11,9 +11,7 @@ func Unmarshal() any {
 
 	claims := Info{}
 
-	err := jwt.Unmarshal(token, &claims, Secret)
-
-	if err != nil {
+	if err := jwt.Unmarshal(token, &claims, SecretKey); err != nil {
 		return err
 	}
 

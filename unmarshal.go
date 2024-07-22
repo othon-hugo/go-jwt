@@ -1,16 +1,16 @@
 package jwt
 
 func Unmarshal(encodedToken string, claims any, secret []byte) error {
-	tkn := &token{
+	t := &token{
 		payload: payload{claims: claims},
 	}
 
-	if err := tkn.unmarshal(encodedToken, secret); err != nil {
+	if err := t.unmarshal(encodedToken, secret); err != nil {
 		return err
 	}
 
-	if tkn.header.Typ != JWT {
-		return UnsupportedTypeError{tkn.header.Typ}
+	if t.header.Typ != JWT {
+		return UnsupportedTypeError{t.header.Typ}
 	}
 
 	return nil
