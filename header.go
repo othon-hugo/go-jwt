@@ -8,6 +8,12 @@ import (
 	"github.com/othon-hugo/jwt/encoding"
 )
 
+const (
+	HS256 = "HS256"
+	HS384 = "HS384"
+	HS512 = "HS512"
+)
+
 type HeaderParams = header
 
 type header struct {
